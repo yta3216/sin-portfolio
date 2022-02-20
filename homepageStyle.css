@@ -4,13 +4,17 @@
   --icon-size: 1.5rem;
   --bg-primary: #0C0C11;
   --bg-secondary: #1B1B24;
+  --bg-side-card: #14141a;
   --text-primary: #A5A8AE;
   --text-secondary: #5E606A;
+  --text-money: #777881;
   --text-hover: #F22023;
+  --item-green: #166b0b;
   --sidebar-activated: #312ec0;
   --transition-speed: 300ms;
-  font-family: "Montserrat", sans-serif;
+  --picture-spacing: 0.5px;
   
+  font-family: "Montserrat", sans-serif;
 }
 body {
   margin: 0;
@@ -24,12 +28,11 @@ body {
 }
 main {
   margin-left: var(--sidebar-size);
-  width: calc(100% - var(--sidebar-size) * 2 + 1.5rem);
-  height: calc(100vh - 2rem);
-  padding: 1rem;
+  width: calc(100vw - var(--sidebar-size));
+  height: 100vh;
   position: absolute;
   color: var(--text-primary);
-  transition: transform .85s, opacity 0.55s, width 0.5s, height 0.5s;
+  transition: opacity 0.55s, width 0.5s, height 0.5s;
   text-align: center;
   transform: translateY(-100%);
   opacity: 0;
@@ -38,14 +41,15 @@ main {
   opacity: 1;
   transform: translateY(0);
 }
-body::-webkit-scrollbar {
+body::-webkit-scrollbar, .gallery::-webkit-scrollbar {
   width: 0.5rem;
 }
-body::-webkit-scrollbar-track {
-  background: rgba(73, 73, 73, 0.37);
+body::-webkit-scrollbar-track, .gallery::-webkit-scrollbar-track {
+  background: rgba(134, 134, 134, 0.37);
 }
-body::-webkit-scrollbar-thumb {
-  background: rgb(211, 211, 211);
+body::-webkit-scrollbar-thumb, .gallery::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: rgb(175, 175, 175);
 }
 .navbar {
   width: var(--sidebar-size);
@@ -139,29 +143,118 @@ body::-webkit-scrollbar-thumb {
   justify-items: center;
   z-index: 2;
 }
-.card {
+.homecard{
+  box-shadow: 0px 25px 45px rgba(26, 26, 26, 0.445);
   background: var(--bg-secondary);
+  display: grid;
+  width: clamp(375px, 60%, 750px);
+  grid-template-columns: 100% 0%;
+  column-gap: 10%;
+  height: 55%;
+  padding: 40px 30px;
+  border-radius: 20px;
+  transition: var(--transition-speed) ease;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  position: relative;
+  transition: var(--transition-speed) ease;
+}
+.side-card {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  overflow: hidden;
+  padding: 20px 0px;
+}
+.section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: clamp(350px, 50%, 750px);
-  height: 55%;
-  margin: 50px;
-  padding: 40px;
-  position: relative;
+  width: auto;
+  padding: 0px 5px 10px 5px;
+}
+.sideitem {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  width: 90%;
+}
+.drawinfo {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  height: 100%;
+  padding: 5px;
+}
+.drawinfo p {
+  margin: 5px 0px;
+}
+.yes {
+  color: var(--item-green);
+}
+.no {
+  color: var(--text-hover);
+  text-decoration: line-through;
+}
+.section h2 {
+  transition: var(--transition-speed);
+  margin: 5px;
+  font-size: 1.5rem;
+}
+.section h4 {
+  font-size: rem;
+  margin: 5px;
+}
+.sideitem p {
+  transition: var(--transition-speed);
+  font-size: 1rem;
+  margin: 5px 0px;
+}
+.money {
+  color: var(--text-money);
+}
+.sideitem img {
+  height: auto;
+  width: 2rem;
+
+}
+.sideitem p:last-of-type {
+  margin-left: auto;
+}
+.divider {
+  border-bottom: 2px solid var(--bg-secondary);
+  width: 80%;
+  align-self: center;
   border-radius: 20px;
-  transition: var(--transition-speed) ease;
+}
+.card-toggle {
+  align-items: start;
+  width: fit-content;
+}
+.homecard-toggle {
+  grid-template-columns: 60% auto;
+  column-gap: 0%;
+}
+.side-card-toggle {
+  background: var(--bg-side-card);
+  border-radius: 20px;
 }
 .card-img {
   position: absolute;
   border-radius: 100rem;
-  border: 5px solid #43444D;
+  border: 10px solid var(--bg-secondary);
   transition: var(--transition-speed) ease;
 }
 .card-links {
   display: flex;
   flex-direction: row;
   background: var(--bg-primary);
+  box-shadow: 0px 25px 45px rgba(26, 26, 26, 0.45);
   border-radius: 100rem;
 }
 .cardlink {
@@ -184,23 +277,124 @@ body::-webkit-scrollbar-thumb {
 }
 .card h1 {
   letter-spacing: 5px;
-  margin-bottom: 10px;
-  margin-top: 40px;
-  animation: letterSpacing 7.5s ease-in-out 0s infinite alternate;
-  font-size: 3rem;
+  margin-bottom: 5px;
+  margin-top: 30px;
+  font-size: 2.75rem;
   transition: var(--transition-speed);
 }
 .card p {
-  margin: 5px 0px 15px 0px;
+  margin: 0px 0px 5px 0px;
   letter-spacing: 2px;
   font-size: 1.3rem;
   color: var(--text-secondary);
 }
-@keyframes letterSpacing {
-  0%{letter-spacing: 5px;}
-  100%{letter-spacing: 8.5px;}
+.commText {
+  font-size: 1rem;
+  letter-spacing: normal;
+  margin: 0px 0px 7.5px;
+}
+.open {
+  color: var(--item-green);
+}
+.closed {
+  color: var(--text-hover);
+}
+.card h5 {
+  margin-top: auto;
+  /* align-self: flex-end; */
+  margin-bottom: 0;
+  text-decoration: none;
+  font-weight: normal;
+  color: var(--text-secondary);
 }
 
+.commBtn {
+  display: flex;
+  font-family: "Montserrat", sans-serif;
+  background: var(--bg-primary);
+  border: none;
+  margin-top: 10px;
+  border-radius: 100rem;
+  justify-content: center;
+  box-shadow: none;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.commBtn:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  box-shadow: 0px 0px 5px 1px var(--bg-primary);
+}
+.commBtn:hover svg {
+  background: none;
+}
+.commBtn p {
+  font-size: 1.2rem;
+  margin: 0px 10px 0px 0px;
+  align-self: center;
+  letter-spacing: normal;
+}
+.commBtn svg {
+  width: 1.5rem;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  color: var(--text-primary);
+  padding: 0.65rem;
+  margin: 0.4rem;
+  border-radius: 100rem;
+  background: var(--bg-secondary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+.creditLink {
+  color: var(--text-secondary);
+}
+.gallery {
+  background: var(--bg-secondary);
+  height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+.picture-frames {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+.picFrame {
+  display: relative;
+  padding: var(--picture-spacing);
+  background: var(--bg-secondary);
+  backdrop-filter: blur(50px);
+  overflow: hidden;
+  height: calc(50vw - var(--sidebar-size) - var(--picture-spacing)*2);
+}
+.picFrame img {
+  height: auto;
+  width: 100%;
+  transition: var(--transition-speed);
+}
+.picFrame h1 {
+  position: absolute;
+  width: 100%;
+  top: calc(50% - 1rem);
+  margin-top: 2rem;
+  font-size: 2rem;
+  opacity: 0;
+  transition: var(--transition-speed);
+  color: white;
+  z-index: 1;
+}
+.picFrame:hover img {
+  filter: blur(3px);
+}
+.picFrame:hover h1 {
+  opacity: 1;
+  margin-top: 0;
+}
+.information {
+  backdrop-filter: blur(30px);
+}
 @media only screen and (min-width: 600px) {
   .socialLinks.activated .navlink {
     margin-left: calc(3.5rem * var(--i));
@@ -216,12 +410,22 @@ body::-webkit-scrollbar-thumb {
     width: 9rem;
     margin-top: calc(-9rem + 20px);
   }
-  .card {
-    margin-top: 9rem;
+  .homecard {
+    margin-top: calc(9rem/2);
   }
   .card h1 {
-    font-size: 3.5rem;
-
+    font-size: 3rem;
+  }
+}
+@media only screen and (max-width: 750px){
+  .section h2 {
+    font-size: 1.2rem;
+  }
+  .sideitem p {
+    font-size: .75rem;
+  }
+  .sideitem img {
+    width: 1.75rem;
   }
 }
 @media only screen and (min-width: 1000px){
@@ -230,12 +434,18 @@ body::-webkit-scrollbar-thumb {
     width: 12rem;
     margin-top: calc(-12rem + 55px);
   }
-  .card {
-    margin-top: 12rem;
+  .homecard {
+    margin-top: calc(12rem/2);
   }
   .card h1 {
     font-size: 4rem;
     margin-top: 4rem;
+  }
+  .picture-frames {
+    grid-template-columns: auto auto auto;
+  }
+  .picFrame {
+    height: calc(33.33vw - var(--sidebar-size));
   }
 }
 @media only screen and (max-width: 599px) {
@@ -245,7 +455,8 @@ body::-webkit-scrollbar-thumb {
     bottom: 0;
   }
   main {
-    width: calc(100% - var(--sidebar-size) + 1.5rem);
+    width: 100vw;
+    height: calc(100vh - var(--sidebar-size));
     margin: 0;
   }
   .navbar:hover {
@@ -280,7 +491,17 @@ body::-webkit-scrollbar-thumb {
     width: 8rem;
     margin-top: calc(-8rem + 10px);
   }
-  .card {
-    margin-top: 8rem;
+  .homecard {
+    margin-top: calc(8rem/2)
+
   }
+  .picFrame {
+    height: calc(50vw - var(--picture-spacing)*2);
+  }
+  .picFrame h1 {
+    top: calc(50% - 1rem);
+    margin-top: 2rem;
+    font-size: 2rem;
+  }
+  
 }
